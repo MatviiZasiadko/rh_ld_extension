@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Google Scrape",
+  "version": "1.0.11",
+  "description": "Google Scrape",
+  "action": {
+    "default_popup": "src/index.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "cookies",
+    "windows",
+    "background"
+  ],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://crm-s.com/*",
+    "https://crm.rhelpers.com/*",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "logo_png_short.png",
+    "48": "logo_png_short.png",
+    "128": "logo_png_short.png"
+  }
+}
