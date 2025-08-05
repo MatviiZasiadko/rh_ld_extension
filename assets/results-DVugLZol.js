@@ -1,1 +1,63 @@
-import{c as y,j as n,R as L,r}from"./index-BlnmAowk.js";const f=.9;function x(){const[c,d]=r.useState([]),[i,t]=r.useState(new Set);r.useEffect(()=>{chrome.storage.local.get(["companiesArray","visitedLinks"],e=>{e.companiesArray&&d(e.companiesArray),e.visitedLinks&&Array.isArray(e.visitedLinks)&&t(new Set(e.visitedLinks))})},[]);const l=async e=>{if(!i.has(e))try{const{quota:s,usage:m}=await navigator.storage.estimate(),k=m/s,a=[...Array.from(i),e],o=k>f?a.slice(50):a;await new Promise((h,p)=>{chrome.storage.local.set({visitedLinks:o},()=>{chrome.runtime.lastError?p(chrome.runtime.lastError):h()})}),t(new Set(o))}catch(s){console.error("Error handling link click:",s)}};return n.jsxs("div",{style:{padding:"2rem"},children:[n.jsx("h1",{children:"Search Results"}),n.jsx("ol",{children:c.map(e=>n.jsxs("li",{children:[n.jsx("b",{children:e.company_name}),n.jsx("div",{children:n.jsx("a",{href:e.company_linkedin,target:"_blank",rel:"noopener noreferrer",onClick:()=>l(e.company_linkedin),className:i.has(e.company_linkedin)?"visited-link":"",children:e.company_linkedin})})]},e.company_name))})]})}y.createRoot(document.getElementById("results-root")).render(n.jsx(L.StrictMode,{children:n.jsx(x,{})}));
+import { c as y, j as n, R as L, r } from "./index-BlnmAowk.js";
+const f = 0.9;
+function x() {
+  const [c, d] = r.useState([]),
+    [i, t] = r.useState(new Set());
+  r.useEffect(() => {
+    chrome.storage.local.get(["companiesArray", "visitedLinks"], (e) => {
+      e.companiesArray && d(e.companiesArray),
+        e.visitedLinks &&
+          Array.isArray(e.visitedLinks) &&
+          t(new Set(e.visitedLinks));
+    });
+  }, []);
+  const l = async (e) => {
+    if (!i.has(e))
+      try {
+        const { quota: s, usage: m } = await navigator.storage.estimate(),
+          k = m / s,
+          a = [...Array.from(i), e],
+          o = k > f ? a.slice(50) : a;
+        await new Promise((h, p) => {
+          chrome.storage.local.set({ visitedLinks: o }, () => {
+            chrome.runtime.lastError ? p(chrome.runtime.lastError) : h();
+          });
+        }),
+          t(new Set(o));
+      } catch (s) {
+        console.error("Error handling link click:", s);
+      }
+  };
+  return n.jsxs("div", {
+    style: { padding: "2rem" },
+    children: [
+      n.jsx("h1", { children: "Search Results" }),
+      n.jsx("ol", {
+        children: c.map((e) =>
+          n.jsxs(
+            "li",
+            {
+              children: [
+                n.jsx("b", { children: e.company_name }),
+                n.jsx("div", {
+                  children: n.jsx("a", {
+                    href: e.company_linkedin,
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                    onClick: () => l(e.company_linkedin),
+                    className: i.has(e.company_linkedin) ? "visited-link" : "",
+                    children: e.company_linkedin,
+                  }),
+                }),
+              ],
+            },
+            e.company_name
+          )
+        ),
+      }),
+    ],
+  });
+}
+y.createRoot(document.getElementById("results-root")).render(
+  n.jsx(L.StrictMode, { children: n.jsx(x, {}) })
+);
